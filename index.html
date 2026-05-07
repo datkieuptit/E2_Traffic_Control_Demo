@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E2 - Traffic Signal Control | CamAI Ecosystem</title>
+    <meta name="description" content="Phần mềm phân tích điều khiển tự động tủ đèn giao thông - CamAI E2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🚦</div>
+                <span class="logo-text">CamAI <span>E2</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="dashboard">📊 Tổng Quan Giao Thông</a>
+                <a href="#" class="nav-item" data-tab="realtime">🔴 Phân Tích Thời Gian Thực</a>
+                <a href="#" class="nav-item" data-tab="signal">🚦 Điều Khiển Tín Hiệu</a>
+                <a href="#" class="nav-item" data-tab="greenwave">🟢 Làn Sóng Xanh</a>
+                <a href="#" class="nav-item" data-tab="forecast">📈 Dự Báo & Mô Hình</a>
+                <a href="#" class="nav-item" data-tab="visualization">📺 Trực Quan Hoá</a>
+                <a href="#" class="nav-item" data-tab="health">💓 Giám Sát Hệ Thống</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-dot online"></div>
+                <span>Hệ Thống Hoạt Động</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1 id="pageTitle">Tổng Quan Giao Thông</h1>
+                <div class="header-right">
+                    <div class="system-overview">
+                        <span class="sys-stat">🔀 338 Nút Giao</span>
+                        <span class="sys-stat">🚦 684 Tủ Đèn</span>
+                        <span class="sys-stat">🟢 47 Làn Sóng Xanh</span>
+                    </div>
+                    <div class="hw-stats"><span>CPU 55%</span><span>GPU 72%</span><span>Net 640Mbps</span></div>
+                    <div class="notif">🔔<span class="badge">5</span></div>
+                    <div class="avatar">E2</div>
+                </div>
+            </header>
+
+            <!-- TAB 1: TỔNG QUAN GIAO THÔNG -->
+            <section id="dashboardTab" class="tab active">
+                <div class="dashboard-cards">
+                    <div class="dash-card">
+                        <div class="card-icon">🔀</div>
+                        <div class="card-content">
+                            <div class="card-number">342</div>
+                            <div class="card-label">Nút Giao Thông</div>
+                            <div class="card-sub">338 Hoạt Động • 4 Bảo Trì</div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-icon">🚦</div>
+                        <div class="card-content">
+                            <div class="card-number">684</div>
+                            <div class="card-label">Tủ Đèn Tín Hiệu</div>
+                            <div class="card-sub">OCIT/RSMP • EN 12675/50556</div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-icon">📊</div>
+                        <div class="card-content">
+                            <div class="card-number" id="totalVehicles">4.28M</div>
+                            <div class="card-label">Phương Tiện Hôm Nay</div>
+                            <div class="card-sub">17 loại phân loại AI + PCU</div>
+                        </div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="card-icon">⏱️</div>
+                        <div class="card-content">
+                            <div class="card-number green-text">-32%</div>
+                            <div class="card-label">Giảm Thời Gian Chờ</div>
+                            <div class="card-sub">↓18% nhiên liệu • ↓22% khí thải</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- License & Compliance -->
+                <div class="license-section">
+                    <div class="license-card">
+                        <div class="license-icon">🔐</div>
+                        <div class="license-info">
+                            <div class="license-title">Bản Quyền Vĩnh Viễn (Perpetual License)</div>
+                            <div class="license-key" id="licenseKey">CMC-E2-XXXX-XXXX-XXXX-2028</div>
+                            <div class="license-meta">
+                                <span>Tủ đèn: <strong id="licCtrl">684 / 1500</strong></span>
+                                <span>Nút giao: <strong id="licInt">338 / 500</strong></span>
+                                <span>Hỗ trợ đến: <strong>2028-12-31</strong></span>
+                            </div>
+                        </div>
+                        <div class="compliance-tags" id="complianceTags"></div>
+                    </div>
+                </div>
+
+                <!-- Sensor Sources -->
+                <div class="sensor-section">
+                    <h3>📡 Nguồn Dữ Liệu Đầu Vào — Camera + Cảm Biến</h3>
+                    <div class="sensor-grid" id="sensorGrid"></div>
+                </div>
+
+                <!-- Intersection Browser -->
+                <div class="location-browser">
+                    <h3>🔀 Duyệt Nút Giao - Chọn nút giao để xem chi tiết</h3>
+                    <div class="camera-legend">
+                        <div class="legend-item">
+                            <span class="legend-icon type3">📊</span>
+                            <span class="legend-text">TYPE_3: Đo đếm lưu lượng</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-icon type4">🔭</span>
+                            <span class="legend-text">TYPE_4: Toàn cảnh nút giao</span>
+                        </div>
+                    </div>
+                    <div class="location-grid" id="intersectionGrid"></div>
+                </div>
+
+                <!-- Traffic Overview -->
+                <div class="monitor-layout">
+                    <div class="monitor-main">
+                        <h3>📹 Camera Nút Giao - <span id="selectedIntersectionName">Ngã tư Kim Mã - Nguyễn Chí Thanh</span></h3>
+                        <div class="cam-grid" id="mainCamGrid"></div>
+                    </div>
+                    <div class="event-panel">
+                        <h3>🚦 Sự Kiện Điều Khiển Đèn</h3>
+                        <div class="event-stats">
+                            <span class="evt-stat info">🔄 <span id="optimCount">84,720</span> Tối ưu</span>
+                            <span class="evt-stat warn">⚠️ <span id="congestionCount">23</span> Ùn tắc</span>
+                            <span class="evt-stat danger">🚨 <span id="incidentCount">3</span> Sự cố</span>
+                        </div>
+                        <div id="eventList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: PHÂN TÍCH THỜI GIAN THỰC -->
+            <section id="realtimeTab" class="tab">
+                <div class="realtime-dashboard">
+                    <h3>🔴 Phân Tích AI Thời Gian Thực - Camera TYPE_3 & TYPE_4</h3>
+                    <div class="live-demo-section">
+                        <div class="live-stream-container">
+                            <h4>🎥 Camera Giám Sát Giao Thông - Dữ liệu đếm & phân loại</h4>
+                            <div class="camera-select-grid" id="realtimeCameraGrid"></div>
+
+                            <!-- Drag-Drop Toolbar (PL06 #6) - vẽ trực tiếp trên live cam -->
+                            <div class="dd-toolbar-strip">
+                                <span class="dd-strip-title">🎯 Công Cụ Kéo Thả trên Live Cam:</span>
+                                <button class="dd-tool active" data-tool="rectangle">⬛ Vùng đếm</button>
+                                <button class="dd-tool" data-tool="line">— Đường đếm</button>
+                                <button class="dd-tool" data-tool="arrow">↗ Hướng</button>
+                                <button class="dd-tool" data-tool="zone">🔲 Zone OD</button>
+                                <button class="dd-tool reset" id="ddReset">🔄 Đặt lại</button>
+                                <span class="dd-counter" id="ddCounter">0 đối tượng</span>
+                            </div>
+                            <div class="dd-info">
+                                <small id="ddHint">💡 <strong>Vùng đếm:</strong> bấm & kéo trên video bên dưới để vẽ vùng đếm. Hệ thống tự cấu hình rule thu thập dữ liệu. Double-click để xoá.</small>
+                            </div>
+
+                            <div class="demo-camera-feed">
+                                <div class="video-stream" id="videoStream" style="border-color:var(--accent);">
+                                    <div class="stream-placeholder-full" id="realtimeVideoPlaceholder">
+                                        <div style="font-size:48px;margin-bottom:10px;">📊</div>
+                                        <div>Camera TYPE_3 - Đo Đếm Lưu Lượng</div>
+                                        <div style="font-size:12px;margin-top:5px;">RTSP Stream + AI Vehicle Counting</div>
+                                    </div>
+                                    <div class="stream-overlay">
+                                        <div class="stream-info">
+                                            <span class="stream-status">🔴 LIVE</span>
+                                            <span class="stream-protocol" id="rtStreamProtocol">RTSP://10.30.1.10:554/stream</span>
+                                            <span class="stream-camera" id="rtStreamCamera" style="background:rgba(16,185,129,.9);">CAM_KM_T3_01</span>
+                                        </div>
+                                        <div id="vehicleDetectionOverlay" class="detection-overlay"></div>
+                                    </div>
+                                    <div class="dd-draw-layer" id="ddDrawLayer">
+                                        <div class="dd-empty-hint" id="ddEmptyHint">🎯 Bấm & kéo trên live cam để định nghĩa vùng đếm</div>
+                                    </div>
+                                </div>
+                                <div class="realtime-data-panel">
+                                    <h5>📊 Dữ Liệu Đếm Phương Tiện Thời Gian Thực</h5>
+                                    <div class="vehicle-count-grid" id="vehicleCountGrid"></div>
+                                    <div class="traffic-metrics">
+                                        <div class="metric-row"><span>Tốc độ TB:</span><span id="avgSpeed" class="metric-val">38 km/h</span></div>
+                                        <div class="metric-row"><span>Mật độ hàng đợi:</span><span id="queueDensity" class="metric-val">12 xe</span></div>
+                                        <div class="metric-row"><span>Tỷ lệ rẽ trái:</span><span id="turnLeftRate" class="metric-val">18%</span></div>
+                                        <div class="metric-row"><span>Tỷ lệ rẽ phải:</span><span id="turnRightRate" class="metric-val">25%</span></div>
+                                        <div class="metric-row"><span>Lưu lượng/phút:</span><span id="flowRate" class="metric-val">42 xe/phút</span></div>
+                                    </div>
+                                    <div class="ai-processing-info">
+                                        <h6>🤖 AI Processing</h6>
+                                        <div class="processing-item"><span class="proc-icon">🔍</span><span class="proc-desc">Vehicle Detection (YOLOv8)</span><span class="proc-status">✅</span></div>
+                                        <div class="processing-item"><span class="proc-icon">📊</span><span class="proc-desc">17-Class Classification</span><span class="proc-status">✅</span></div>
+                                        <div class="processing-item"><span class="proc-icon">⚡</span><span class="proc-desc">Speed Estimation</span><span class="proc-status">✅</span></div>
+                                        <div class="processing-item"><span class="proc-icon">📐</span><span class="proc-desc">OD Matrix Analysis</span><span class="proc-status">✅</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- OD Matrix - Sankey Style (PL06 #8) -->
+                    <div class="od-section">
+                        <h3>↗ Ma Trận O-D Nút Giao - Sankey Diagram</h3>
+                        <div class="od-grid">
+                            <div class="od-sankey" id="odSankey"></div>
+                            <div class="od-stats">
+                                <h4>Tỷ lệ chuyển hướng</h4>
+                                <div class="od-ratio-list" id="odRatioList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trajectory Analysis (PL06 #5) -->
+                    <div class="trajectory-section">
+                        <h3>🛣️ Phân Tích Quỹ Đạo Phương Tiện - Phát Hiện Bất Thường</h3>
+                        <div class="trajectory-list" id="trajectoryList"></div>
+                    </div>
+
+                    <!-- Vehicle Classification + PCU (PL06 #9) -->
+                    <div class="classification-section">
+                        <h3>🚗 Phân Loại 17 Loại Phương Tiện + Quy Đổi PCU</h3>
+                        <div class="pcu-info">
+                            <span>📐 PCU (Passenger Car Unit) - quy đổi để tối ưu pha:</span>
+                            <span class="pcu-tag">Ô tô con = 1.0</span>
+                            <span class="pcu-tag">Xe tải = 2.0</span>
+                            <span class="pcu-tag">Xe buýt = 2.5</span>
+                            <span class="pcu-tag">Xe máy = 0.3</span>
+                            <span class="pcu-tag">Xe đạp = 0.2</span>
+                        </div>
+                        <div class="vehicle-class-grid" id="vehicleClassGrid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: ĐIỀU KHIỂN TÍN HIỆU -->
+            <section id="signalTab" class="tab">
+                <div class="signal-dashboard">
+                    <h3>🚦 Điều Khiển Tín Hiệu Giao Thông - Quản Lý Pha Đèn</h3>
+                    <!-- Signal Phase Display -->
+                    <div class="signal-phase-section">
+                        <h3>⏱️ Pha Đèn Hiện Tại - <span id="currentPlanName">Giờ cao điểm sáng</span></h3>
+                        <div class="phase-display" id="phaseDisplay"></div>
+                        <div class="cycle-timer">
+                            <div class="cycle-bar"><div class="cycle-progress" id="cycleProgress"></div></div>
+                            <div class="cycle-info">
+                                <span>Chu kỳ: <strong id="cycleTime">140s</strong></span>
+                                <span>Pha hiện tại: <strong id="currentPhase">Pha 1 - Bắc Nam</strong></span>
+                                <span>Còn lại: <strong id="phaseRemaining">32s</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Signal Plans -->
+                    <div class="signal-plans-section">
+                        <h3>📋 Kế Hoạch Tín Hiệu Trong Ngày</h3>
+                        <div class="plans-grid" id="signalPlansGrid"></div>
+                    </div>
+                    <!-- Priority Modes: TSP / EVP / Flash / All-Red / Manual -->
+                    <div class="priority-modes-section">
+                        <h3>⚡ Chế Độ Ưu Tiên & Đặc Biệt</h3>
+                        <div class="priority-grid" id="priorityModesGrid"></div>
+                    </div>
+
+                    <!-- Intersection Signal Status -->
+                    <div class="intersection-signals">
+                        <h3>🔀 Trạng Thái Đèn Tại Các Nút Giao</h3>
+                        <div class="signal-status-grid" id="signalStatusGrid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: LÀN SÓNG XANH -->
+            <section id="greenwaveTab" class="tab">
+                <div class="greenwave-dashboard">
+                    <h3>🟢 Điều Khiển Làn Sóng Xanh Liên Nút - Green Wave Optimization</h3>
+                    <!-- Green Wave Corridors -->
+                    <div class="gw-overview-cards">
+                        <div class="dash-card"><div class="card-icon" style="background:rgba(16,185,129,.15);">🟢</div><div class="card-content"><div class="card-number green-text">47</div><div class="card-label">Hành Lang Sóng Xanh</div><div class="card-sub">43 Hoạt Động • 4 Đang Tối Ưu</div></div></div>
+                        <div class="dash-card"><div class="card-icon" style="background:rgba(16,185,129,.15);">📏</div><div class="card-content"><div class="card-number green-text">156km</div><div class="card-label">Tổng Chiều Dài</div><div class="card-sub">Phủ 8 tỉnh/thành phố</div></div></div>
+                        <div class="dash-card"><div class="card-icon" style="background:rgba(16,185,129,.15);">⚡</div><div class="card-content"><div class="card-number green-text">85%</div><div class="card-label">Hiệu Suất TB</div><div class="card-sub">↑12% so với tháng trước</div></div></div>
+                        <div class="dash-card"><div class="card-icon" style="background:rgba(16,185,129,.15);">⏱️</div><div class="card-content"><div class="card-number green-text">-28%</div><div class="card-label">Giảm Dừng Đỗ</div><div class="card-sub">Trung bình mỗi hành lang</div></div></div>
+                    </div>
+                    <!-- Corridor Details -->
+                    <div class="corridor-list" id="corridorList"></div>
+                    <!-- Green Wave Visualization -->
+                    <div class="gw-visualization">
+                        <h3>📊 Biểu Đồ Sóng Xanh - Time-Space Diagram</h3>
+                        <div class="time-space-diagram" id="timeSpaceDiagram"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: DỰ BÁO & MÔ HÌNH -->
+            <section id="forecastTab" class="tab">
+                <div class="forecast-dashboard">
+                    <h3>📈 Dự Báo & Mô Hình Hoá Giao Thông</h3>
+                    <div class="overview-grid">
+                        <div class="overview-section">
+                            <h3>🔮 Dự Báo Lưu Lượng 24h</h3>
+                            <div class="forecast-chart" id="forecastChart"></div>
+                        </div>
+                        <div class="overview-section">
+                            <h3>🧠 Mô Hình AI Dự Báo</h3>
+                            <div class="model-info">
+                                <div class="geo-item"><span class="geo-label">Mô hình:</span><span class="geo-value">LSTM + Attention</span></div>
+                                <div class="geo-item"><span class="geo-label">Độ chính xác:</span><span class="geo-value">94.2%</span></div>
+                                <div class="geo-item"><span class="geo-label">Tầm dự báo:</span><span class="geo-value">15-60 phút</span></div>
+                                <div class="geo-item"><span class="geo-label">Cập nhật:</span><span class="geo-value">Mỗi 5 phút</span></div>
+                                <div class="geo-item"><span class="geo-label">Dữ liệu đầu vào:</span><span class="geo-value">Camera T3, T4</span></div>
+                                <div class="geo-item"><span class="geo-label">Yếu tố thời tiết:</span><span class="geo-value">Có tích hợp</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Traffic Predictions -->
+                    <div class="predictions-section">
+                        <h3>⚠️ Dự Báo Ùn Tắc Sắp Tới</h3>
+                        <div class="prediction-cards" id="predictionCards"></div>
+                    </div>
+                    <!-- Optimization Suggestions -->
+                    <div class="optimization-section">
+                        <h3>💡 Đề Xuất Tối Ưu Từ AI</h3>
+                        <div class="suggestion-list" id="suggestionList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: TRỰC QUAN HOÁ -->
+            <section id="visualizationTab" class="tab">
+                <div class="vis-dashboard">
+                    <h3>📺 Dashboard Trực Quan Hoá & Báo Cáo</h3>
+                    <div class="vis-cards">
+                        <div class="dash-card"><div class="card-icon">🚗</div><div class="card-content"><div class="card-number" id="visVehicles">4.28M</div><div class="card-label">Tổng Phương Tiện</div><div class="card-sub">Hôm nay</div></div></div>
+                        <div class="dash-card"><div class="card-icon">⏱️</div><div class="card-content"><div class="card-number" id="visAvgWait">42s</div><div class="card-label">Thời Gian Chờ TB</div><div class="card-sub">Giảm 32% so với cố định</div></div></div>
+                        <div class="dash-card"><div class="card-icon">🟢</div><div class="card-content"><div class="card-number green-text" id="visGreenEff">85%</div><div class="card-label">Hiệu Suất Sóng Xanh</div><div class="card-sub">47 hành lang</div></div></div>
+                        <div class="dash-card"><div class="card-icon">📉</div><div class="card-content"><div class="card-number" id="visCongestion" style="color:var(--warn);">12%</div><div class="card-label">Tỷ Lệ Ùn Tắc</div><div class="card-sub">Giảm 18% so với hôm qua</div></div></div>
+                    </div>
+                    <!-- Traffic Flow Chart -->
+                    <div class="overview-grid">
+                        <div class="overview-section">
+                            <h3>📊 Lưu Lượng Theo Giờ</h3>
+                            <div class="hourly-chart" id="hourlyChart"></div>
+                        </div>
+                        <div class="overview-section">
+                            <h3>🏆 Top Nút Giao Lưu Lượng Cao</h3>
+                            <div class="ranking-list" id="topIntersections"></div>
+                        </div>
+                    </div>
+                    <!-- Heatmap + GIS Map (PL06 #11) -->
+                    <div class="overview-grid">
+                        <div class="overview-section">
+                            <h3>🗺️ Bản Đồ Nhiệt Mật Độ Giao Thông Theo Quận</h3>
+                            <div class="heatmap-grid" id="heatmapGrid"></div>
+                            <div class="heatmap-legend">
+                                <span class="hm-leg low">< 50% — Thông thoáng</span>
+                                <span class="hm-leg med">50-70% — Trung bình</span>
+                                <span class="hm-leg high">70-85% — Đông</span>
+                                <span class="hm-leg crit">> 85% — Ùn tắc</span>
+                            </div>
+                        </div>
+                        <div class="overview-section">
+                            <h3>🎨 Bản Đồ GIS - Tô Màu Tuyến Theo Tốc Độ</h3>
+                            <div class="gis-map" id="gisMap">
+                                <div class="gis-route" data-speed=">40">
+                                    <span class="gis-dot green"></span>
+                                    <span class="gis-name">Đại lộ Thăng Long</span>
+                                    <span class="gis-speed">52 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed=">40">
+                                    <span class="gis-dot green"></span>
+                                    <span class="gis-name">Vành đai 3</span>
+                                    <span class="gis-speed">48 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="20-40">
+                                    <span class="gis-dot yellow"></span>
+                                    <span class="gis-name">Phạm Hùng</span>
+                                    <span class="gis-speed">32 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="20-40">
+                                    <span class="gis-dot yellow"></span>
+                                    <span class="gis-name">Trần Duy Hưng</span>
+                                    <span class="gis-speed">28 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="10-20">
+                                    <span class="gis-dot orange"></span>
+                                    <span class="gis-name">Kim Mã</span>
+                                    <span class="gis-speed">18 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="10-20">
+                                    <span class="gis-dot orange"></span>
+                                    <span class="gis-name">Láng Hạ</span>
+                                    <span class="gis-speed">16 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="<10">
+                                    <span class="gis-dot red"></span>
+                                    <span class="gis-name">Tôn Đức Thắng</span>
+                                    <span class="gis-speed">8 km/h</span>
+                                </div>
+                                <div class="gis-route" data-speed="<10">
+                                    <span class="gis-dot red"></span>
+                                    <span class="gis-name">Khâm Thiên</span>
+                                    <span class="gis-speed">6 km/h</span>
+                                </div>
+                                <div class="gis-legend">
+                                    <span class="gl-item"><span class="gl-dot green"></span>>40 km/h</span>
+                                    <span class="gl-item"><span class="gl-dot yellow"></span>20-40</span>
+                                    <span class="gl-item"><span class="gl-dot orange"></span>10-20</span>
+                                    <span class="gl-item"><span class="gl-dot red"></span><10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Distribution -->
+                    <div class="overview-grid">
+                        <div class="overview-section">
+                            <h3>🚗 Phân Bổ Phương Tiện</h3>
+                            <div class="vehicle-dist" id="vehicleDistribution"></div>
+                        </div>
+                        <div class="overview-section">
+                            <h3>📡 Nguồn Dữ Liệu E2</h3>
+                            <div class="geo-stats">
+                                <div class="geo-item"><span class="geo-label">Camera TYPE_3:</span><span class="geo-value">5,890 camera</span></div>
+                                <div class="geo-item"><span class="geo-label">Camera TYPE_4:</span><span class="geo-value">4,380 camera</span></div>
+                                <div class="geo-item"><span class="geo-label">Nguồn dữ liệu:</span><span class="geo-value">API từ E1</span></div>
+                                <div class="geo-item"><span class="geo-label">Tần suất cập nhật:</span><span class="geo-value">Thời gian thực</span></div>
+                                <div class="geo-item"><span class="geo-label">Độ trễ xử lý:</span><span class="geo-value">< 100ms</span></div>
+                                <div class="geo-item"><span class="geo-label">Relay đến:</span><span class="geo-value">E3 (GIS Map)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: GIÁM SÁT HỆ THỐNG -->
+            <section id="healthTab" class="tab">
+                <div class="health-dashboard">
+                    <h3>💓 Giám Sát Sức Khỏe Hệ Thống E2</h3>
+                    <div class="health-grid">
+                        <div class="h-card"><div class="h-label">Sử Dụng CPU</div><div class="h-ring"><svg><circle class="ring-bg" cx="40" cy="40" r="36"></circle><circle class="ring-fill" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="101"></circle></svg><div class="h-val">55%</div></div></div>
+                        <div class="h-card"><div class="h-label">Sử Dụng GPU</div><div class="h-ring"><svg><circle class="ring-bg" cx="40" cy="40" r="36"></circle><circle class="ring-fill gpu" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="63"></circle></svg><div class="h-val">72%</div></div></div>
+                        <div class="h-card"><div class="h-label">Bộ Nhớ</div><div class="h-ring"><svg><circle class="ring-bg" cx="40" cy="40" r="36"></circle><circle class="ring-fill ram" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="81"></circle></svg><div class="h-val">64%</div></div></div>
+                        <div class="h-card"><div class="h-label">I/O Mạng</div><div class="h-ring"><svg><circle class="ring-bg" cx="40" cy="40" r="36"></circle><circle class="ring-fill net" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="136"></circle></svg><div class="h-val">40%</div></div></div>
+                    </div>
+                    <!-- Server Status -->
+                    <div class="server-table">
+                        <h3>🖥️ Trạng Thái Hạ Tầng Máy Chủ E2</h3>
+                        <table class="data-table">
+                            <thead><tr><th>Máy Chủ</th><th>Vai Trò</th><th>Trạng Thái</th><th>CPU</th><th>Bộ Nhớ</th><th>GPU</th><th>Thời Gian HĐ</th></tr></thead>
+                            <tbody>
+                                <tr><td>E2-CTRL-01</td><td>Điều Khiển Chính</td><td><span class="s-on">Trực Tuyến</span></td><td>55%</td><td>64%</td><td>72%</td><td>99.9%</td></tr>
+                                <tr><td>E2-AI-01</td><td>Phân Tích AI</td><td><span class="s-on">Trực Tuyến</span></td><td>78%</td><td>82%</td><td>85%</td><td>99.8%</td></tr>
+                                <tr><td>E2-SIGNAL-01</td><td>Điều Khiển Đèn</td><td><span class="s-on">Trực Tuyến</span></td><td>35%</td><td>45%</td><td>-</td><td>99.9%</td></tr>
+                                <tr><td>E2-FORECAST-01</td><td>Dự Báo & Mô Hình</td><td><span class="s-on">Trực Tuyến</span></td><td>62%</td><td>70%</td><td>68%</td><td>99.7%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- API Integration -->
+                    <div class="api-section">
+                        <h3>🔌 Tích Hợp API E2</h3>
+                        <div class="api-list">
+                            <div class="api-card"><span class="method get">GET</span><code>/api/v1/intersections</code><span class="api-desc">Danh sách nút giao</span></div>
+                            <div class="api-card"><span class="method get">GET</span><code>/api/v1/traffic/realtime/{id}</code><span class="api-desc">Lưu lượng thời gian thực</span></div>
+                            <div class="api-card"><span class="method post">POST</span><code>/api/v1/signal/optimize</code><span class="api-desc">Tối ưu pha đèn</span></div>
+                            <div class="api-card"><span class="method get">GET</span><code>/api/v1/greenwave/{corridorId}</code><span class="api-desc">Trạng thái làn sóng xanh</span></div>
+                            <div class="api-card"><span class="method get">GET</span><code>/api/v1/forecast/{intersectionId}</code><span class="api-desc">Dự báo lưu lượng</span></div>
+                            <div class="api-card"><span class="method ws">WS</span><code>/ws/traffic-events</code><span class="api-desc">Sự kiện giao thông realtime</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <span>E2 Traffic Signal Control v2.1.0</span>
+                <span>338 Nút Giao Hoạt Động</span>
+                <span>684 Tủ Đèn • 47 Hành Lang Sóng Xanh</span>
+                <span>Ecosystem: E1✓ E3✓</span>
+            </footer>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

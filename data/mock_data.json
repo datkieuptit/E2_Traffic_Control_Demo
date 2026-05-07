@@ -1,0 +1,376 @@
+{
+  "system_overview": {
+    "total_intersections": 342,
+    "active_intersections": 338,
+    "offline_intersections": 4,
+    "total_signal_controllers": 684,
+    "cameras_type3": 5890,
+    "cameras_type4": 4380,
+    "loop_detectors": 2840,
+    "weight_sensors": 412,
+    "weather_stations": 86,
+    "green_wave_corridors": 47,
+    "provinces_covered": 8,
+    "daily_optimizations": 84720,
+    "avg_wait_reduction_percent": 32,
+    "fuel_saving_percent": 18,
+    "emission_reduction_percent": 22,
+    "total_vehicles_today": 4287650
+  },
+  "license_info": {
+    "type": "Vĩnh viễn (Perpetual)",
+    "version": "E2 Traffic Control v2.1.0",
+    "max_controllers": 1500,
+    "active_controllers": 684,
+    "max_intersections": 500,
+    "active_intersections": 338,
+    "support_until": "2028-12-31",
+    "compliance": ["OCIT v2.0", "RSMP v3.1.5", "EN 12675", "EN 50556", "C-ITS"],
+    "issued_by": "CMC AI",
+    "license_key": "CMC-E2-XXXX-XXXX-XXXX-2028"
+  },
+  "camera_types": [
+    { "id": "TYPE_3", "name": "Đo đếm lưu lượng", "color": "#10b981", "icon": "📊", "desc": "Phân loại 17 loại phương tiện, đo tốc độ, mật độ hàng đợi", "protocol": "RTSP/ONVIF + MQTT JSON (1 phút)", "freq": "Liên tục", "total_count": 5890 },
+    { "id": "TYPE_4", "name": "Toàn cảnh nút giao", "color": "#3b82f6", "icon": "🔭", "desc": "Phân tích ma trận OD, hành vi phương tiện, tỷ lệ rẽ", "protocol": "RTSP/ONVIF + MQTT JSON (mỗi chu kỳ <2s)", "freq": "Liên tục", "total_count": 4380 }
+  ],
+  "sensor_types": [
+    { "id": "LOOP", "name": "Vòng từ (Loop Detector)", "icon": "🔁", "desc": "Phát hiện xe qua mặt đường, tính lưu lượng & occupancy", "count": 2840, "online": 2812, "color": "#a855f7", "protocol": "RS-485 / MQTT" },
+    { "id": "WEIGHT", "name": "Cảm biến tải trọng", "icon": "⚖️", "desc": "Đo tải trọng xe, phát hiện xe quá tải", "count": 412, "online": 408, "color": "#ec4899", "protocol": "MQTT" },
+    { "id": "WEATHER", "name": "Cảm biến thời tiết", "icon": "🌦️", "desc": "Mưa, sương mù, nhiệt độ, gió - input cho mô hình dự báo", "count": 86, "online": 86, "color": "#06b6d4", "protocol": "MQTT" },
+    { "id": "ENV", "name": "Cảm biến môi trường", "icon": "🌫️", "desc": "Đo PM2.5, CO, NOx tại nút giao", "count": 124, "online": 121, "color": "#84cc16", "protocol": "MQTT" }
+  ],
+  "intersection_groups": [
+    {
+      "id": "INT_KIMMA_NGUYCHINHTHANH",
+      "name": "Ngã tư Kim Mã - Nguyễn Chí Thanh",
+      "type": "major_intersection",
+      "icon": "🔀",
+      "zone": "Quận Ba Đình",
+      "total_cameras": 8,
+      "online": 8,
+      "traffic_level": "high",
+      "signal_phases": 4,
+      "avg_cycle_time": 120,
+      "current_phase": 1,
+      "loop_detectors": 8,
+      "cameras": ["CAM_KM_T3_01", "CAM_KM_T3_02", "CAM_KM_T4_01", "CAM_KM_T4_02", "CAM_KM_T3_03", "CAM_KM_T3_04", "CAM_KM_T4_03", "CAM_KM_T4_04"],
+      "coords": { "lat": 21.0285, "lng": 105.8142 }
+    },
+    {
+      "id": "INT_LANGHA_THAIHA",
+      "name": "Ngã tư Láng Hạ - Thái Hà",
+      "type": "major_intersection",
+      "icon": "🔀",
+      "zone": "Quận Đống Đa",
+      "total_cameras": 8,
+      "online": 7,
+      "traffic_level": "high",
+      "signal_phases": 4,
+      "avg_cycle_time": 110,
+      "current_phase": 2,
+      "loop_detectors": 8,
+      "cameras": ["CAM_LH_T3_01", "CAM_LH_T3_02", "CAM_LH_T4_01", "CAM_LH_T4_02", "CAM_LH_T3_03", "CAM_LH_T3_04", "CAM_LH_T4_03", "CAM_LH_T4_04"],
+      "coords": { "lat": 21.0145, "lng": 105.8215 }
+    },
+    {
+      "id": "INT_CAUGIAY_XUANTHUY",
+      "name": "Ngã tư Cầu Giấy - Xuân Thủy",
+      "type": "major_intersection",
+      "icon": "🔀",
+      "zone": "Quận Cầu Giấy",
+      "total_cameras": 8,
+      "online": 8,
+      "traffic_level": "critical",
+      "signal_phases": 4,
+      "avg_cycle_time": 140,
+      "current_phase": 1,
+      "loop_detectors": 8,
+      "cameras": ["CAM_CG_T3_01", "CAM_CG_T3_02", "CAM_CG_T4_01", "CAM_CG_T4_02", "CAM_CG_T3_03", "CAM_CG_T3_04", "CAM_CG_T4_03", "CAM_CG_T4_04"],
+      "coords": { "lat": 21.0367, "lng": 105.7953 }
+    },
+    {
+      "id": "INT_DOCAN_KIMMA",
+      "name": "Ngã ba Đội Cấn - Kim Mã",
+      "type": "t_intersection",
+      "icon": "🔀",
+      "zone": "Quận Ba Đình",
+      "total_cameras": 6,
+      "online": 6,
+      "traffic_level": "medium",
+      "signal_phases": 3,
+      "avg_cycle_time": 90,
+      "current_phase": 3,
+      "loop_detectors": 6,
+      "cameras": ["CAM_DC_T3_01", "CAM_DC_T3_02", "CAM_DC_T4_01", "CAM_DC_T3_03", "CAM_DC_T4_02", "CAM_DC_T4_03"],
+      "coords": { "lat": 21.0312, "lng": 105.8178 }
+    }
+  ],
+  "cameras": [
+    { "id": "CAM_KM_T3_01", "name": "Kim Mã - Đếm lưu lượng Bắc", "type": "TYPE_3", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.10", "res": "1080p", "bitrate": "4.8 Mbps", "fps": 25, "uptime": "99.9%", "direction": "north" },
+    { "id": "CAM_KM_T3_02", "name": "Kim Mã - Đếm lưu lượng Nam", "type": "TYPE_3", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.11", "res": "1080p", "bitrate": "4.6 Mbps", "fps": 25, "uptime": "99.8%", "direction": "south" },
+    { "id": "CAM_KM_T4_01", "name": "Kim Mã - Toàn cảnh Đông", "type": "TYPE_4", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.12", "res": "4K", "bitrate": "9.1 Mbps", "fps": 30, "uptime": "99.7%", "direction": "east" },
+    { "id": "CAM_KM_T4_02", "name": "Kim Mã - Toàn cảnh Tây", "type": "TYPE_4", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.13", "res": "4K", "bitrate": "9.3 Mbps", "fps": 30, "uptime": "99.9%", "direction": "west" },
+    { "id": "CAM_KM_T3_03", "name": "Kim Mã - Đếm lưu lượng Đông", "type": "TYPE_3", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.14", "res": "1080p", "bitrate": "4.9 Mbps", "fps": 25, "uptime": "99.6%", "direction": "east" },
+    { "id": "CAM_KM_T3_04", "name": "Kim Mã - Đếm lưu lượng Tây", "type": "TYPE_3", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.15", "res": "1080p", "bitrate": "4.7 Mbps", "fps": 25, "uptime": "99.5%", "direction": "west" },
+    { "id": "CAM_KM_T4_03", "name": "Kim Mã - Ma trận OD Bắc", "type": "TYPE_4", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.16", "res": "4K", "bitrate": "8.8 Mbps", "fps": 30, "uptime": "99.8%", "direction": "north" },
+    { "id": "CAM_KM_T4_04", "name": "Kim Mã - Ma trận OD Nam", "type": "TYPE_4", "group": "INT_KIMMA_NGUYCHINHTHANH", "status": "online", "ip": "10.30.1.17", "res": "4K", "bitrate": "9.0 Mbps", "fps": 30, "uptime": "99.7%", "direction": "south" },
+
+    { "id": "CAM_LH_T3_01", "name": "Láng Hạ - Đếm lưu lượng Bắc", "type": "TYPE_3", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.10", "res": "1080p", "bitrate": "4.5 Mbps", "fps": 25, "uptime": "99.7%", "direction": "north" },
+    { "id": "CAM_LH_T3_02", "name": "Láng Hạ - Đếm lưu lượng Nam", "type": "TYPE_3", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.11", "res": "1080p", "bitrate": "4.4 Mbps", "fps": 25, "uptime": "99.5%", "direction": "south" },
+    { "id": "CAM_LH_T4_01", "name": "Láng Hạ - Toàn cảnh Đông", "type": "TYPE_4", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.12", "res": "4K", "bitrate": "9.2 Mbps", "fps": 30, "uptime": "99.9%", "direction": "east" },
+    { "id": "CAM_LH_T4_02", "name": "Láng Hạ - Toàn cảnh Tây", "type": "TYPE_4", "group": "INT_LANGHA_THAIHA", "status": "warning", "ip": "10.30.2.13", "res": "4K", "bitrate": "7.8 Mbps", "fps": 28, "uptime": "97.2%", "direction": "west" },
+    { "id": "CAM_LH_T3_03", "name": "Láng Hạ - Đếm Đông", "type": "TYPE_3", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.14", "res": "1080p", "bitrate": "4.6 Mbps", "fps": 25, "uptime": "99.3%", "direction": "east" },
+    { "id": "CAM_LH_T3_04", "name": "Láng Hạ - Đếm Tây", "type": "TYPE_3", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.15", "res": "1080p", "bitrate": "4.3 Mbps", "fps": 25, "uptime": "99.6%", "direction": "west" },
+    { "id": "CAM_LH_T4_03", "name": "Láng Hạ - Ma trận OD Bắc", "type": "TYPE_4", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.16", "res": "4K", "bitrate": "8.9 Mbps", "fps": 30, "uptime": "99.8%", "direction": "north" },
+    { "id": "CAM_LH_T4_04", "name": "Láng Hạ - Ma trận OD Nam", "type": "TYPE_4", "group": "INT_LANGHA_THAIHA", "status": "online", "ip": "10.30.2.17", "res": "4K", "bitrate": "9.1 Mbps", "fps": 30, "uptime": "99.7%", "direction": "south" },
+
+    { "id": "CAM_CG_T3_01", "name": "Cầu Giấy - Đếm Bắc", "type": "TYPE_3", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.10", "res": "1080p", "bitrate": "5.0 Mbps", "fps": 25, "uptime": "99.9%", "direction": "north" },
+    { "id": "CAM_CG_T3_02", "name": "Cầu Giấy - Đếm Nam", "type": "TYPE_3", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.11", "res": "1080p", "bitrate": "4.8 Mbps", "fps": 25, "uptime": "99.8%", "direction": "south" },
+    { "id": "CAM_CG_T4_01", "name": "Cầu Giấy - Toàn cảnh A", "type": "TYPE_4", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.12", "res": "4K", "bitrate": "9.5 Mbps", "fps": 30, "uptime": "99.9%", "direction": "east" },
+    { "id": "CAM_CG_T4_02", "name": "Cầu Giấy - Toàn cảnh B", "type": "TYPE_4", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.13", "res": "4K", "bitrate": "9.3 Mbps", "fps": 30, "uptime": "99.8%", "direction": "west" },
+    { "id": "CAM_CG_T3_03", "name": "Cầu Giấy - Đếm Đông", "type": "TYPE_3", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.14", "res": "1080p", "bitrate": "4.7 Mbps", "fps": 25, "uptime": "99.7%", "direction": "east" },
+    { "id": "CAM_CG_T3_04", "name": "Cầu Giấy - Đếm Tây", "type": "TYPE_3", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.15", "res": "1080p", "bitrate": "4.9 Mbps", "fps": 25, "uptime": "99.6%", "direction": "west" },
+    { "id": "CAM_CG_T4_03", "name": "Cầu Giấy - Ma trận Bắc", "type": "TYPE_4", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.16", "res": "4K", "bitrate": "9.1 Mbps", "fps": 30, "uptime": "99.5%", "direction": "north" },
+    { "id": "CAM_CG_T4_04", "name": "Cầu Giấy - Ma trận Nam", "type": "TYPE_4", "group": "INT_CAUGIAY_XUANTHUY", "status": "online", "ip": "10.30.3.17", "res": "4K", "bitrate": "9.4 Mbps", "fps": 30, "uptime": "99.9%", "direction": "south" },
+
+    { "id": "CAM_DC_T3_01", "name": "Đội Cấn - Đếm Bắc", "type": "TYPE_3", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.10", "res": "1080p", "bitrate": "4.5 Mbps", "fps": 25, "uptime": "99.8%", "direction": "north" },
+    { "id": "CAM_DC_T3_02", "name": "Đội Cấn - Đếm Nam", "type": "TYPE_3", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.11", "res": "1080p", "bitrate": "4.4 Mbps", "fps": 25, "uptime": "99.7%", "direction": "south" },
+    { "id": "CAM_DC_T4_01", "name": "Đội Cấn - Toàn cảnh", "type": "TYPE_4", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.12", "res": "4K", "bitrate": "9.0 Mbps", "fps": 30, "uptime": "99.9%", "direction": "overview" },
+    { "id": "CAM_DC_T3_03", "name": "Đội Cấn - Đếm Tây", "type": "TYPE_3", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.13", "res": "1080p", "bitrate": "4.6 Mbps", "fps": 25, "uptime": "99.5%", "direction": "west" },
+    { "id": "CAM_DC_T4_02", "name": "Đội Cấn - Ma trận A", "type": "TYPE_4", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.14", "res": "4K", "bitrate": "8.7 Mbps", "fps": 30, "uptime": "99.6%", "direction": "east" },
+    { "id": "CAM_DC_T4_03", "name": "Đội Cấn - Ma trận B", "type": "TYPE_4", "group": "INT_DOCAN_KIMMA", "status": "online", "ip": "10.30.4.15", "res": "4K", "bitrate": "8.9 Mbps", "fps": 30, "uptime": "99.8%", "direction": "west" }
+  ],
+  "green_wave_corridors": [
+    {
+      "id": "GW_KIMMA",
+      "name": "Hành lang Kim Mã",
+      "direction": "Đông → Tây",
+      "length_km": 8.5,
+      "intersections": 12,
+      "speed_kph": 40,
+      "status": "active",
+      "efficiency": 87,
+      "algorithm": "MAXBAND",
+      "stops_reduced": 32,
+      "offset_pattern": [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165],
+      "node_names": ["Kim Mã 1", "Kim Mã 2", "Kim Mã 3", "Daewoo", "Liễu Giai", "Văn Cao", "Đào Tấn", "Núi Trúc", "Linh Lang", "Vạn Bảo", "Đốc Ngữ", "Cầu Giấy"]
+    },
+    {
+      "id": "GW_LANGHA",
+      "name": "Hành lang Láng Hạ",
+      "direction": "Bắc → Nam",
+      "length_km": 6.2,
+      "intersections": 9,
+      "speed_kph": 35,
+      "status": "active",
+      "efficiency": 82,
+      "algorithm": "TRANSYT",
+      "stops_reduced": 28,
+      "offset_pattern": [0, 12, 24, 36, 48, 60, 72, 84, 96],
+      "node_names": ["Láng 1", "Thái Hà", "Hoàng Đạo", "Vũ Trọng", "Huỳnh Thúc", "Trần Duy", "Khâm Thiên", "Tôn Đức", "Lê Duẩn"]
+    },
+    {
+      "id": "GW_CAUGIAY",
+      "name": "Hành lang Cầu Giấy - Xuân Thủy",
+      "direction": "Tây → Đông",
+      "length_km": 5.8,
+      "intersections": 8,
+      "speed_kph": 45,
+      "status": "optimizing",
+      "efficiency": 74,
+      "algorithm": "SCOOT",
+      "stops_reduced": 19,
+      "offset_pattern": [0, 10, 20, 30, 40, 50, 60, 70],
+      "node_names": ["Cầu Giấy", "Trần Thái", "Xuân Thủy", "Phạm Hùng", "Trần Duy", "Trần Đăng", "Trần Quốc", "Mỹ Đình"]
+    },
+    {
+      "id": "GW_NGUYENCHI",
+      "name": "Hành lang Nguyễn Chí Thanh",
+      "direction": "Bắc → Nam",
+      "length_km": 4.5,
+      "intersections": 7,
+      "speed_kph": 38,
+      "status": "active",
+      "efficiency": 91,
+      "algorithm": "MAXBAND",
+      "stops_reduced": 41,
+      "offset_pattern": [0, 14, 28, 42, 56, 70, 84],
+      "node_names": ["NCT 1", "NCT 2", "Trần Duy", "Đường Láng", "Huỳnh", "Liễu Giai", "Bưởi"]
+    }
+  ],
+  "vehicle_types_17": [
+    { "name": "Xe máy", "icon": "🏍️", "pcu": 0.3, "count": 1820000, "pct": 42 },
+    { "name": "Ô tô con", "icon": "🚗", "pcu": 1.0, "count": 1450000, "pct": 34 },
+    { "name": "Xe tải nhẹ", "icon": "🚐", "pcu": 1.5, "count": 280000, "pct": 6.5 },
+    { "name": "Xe tải nặng", "icon": "🚛", "pcu": 2.0, "count": 165000, "pct": 3.8 },
+    { "name": "Xe buýt", "icon": "🚌", "pcu": 2.5, "count": 142000, "pct": 3.3 },
+    { "name": "Xe khách", "icon": "🚍", "pcu": 2.5, "count": 98000, "pct": 2.3 },
+    { "name": "Xe đạp", "icon": "🚲", "pcu": 0.2, "count": 86000, "pct": 2.0 },
+    { "name": "Xe ba gác", "icon": "🛺", "pcu": 0.5, "count": 52000, "pct": 1.2 },
+    { "name": "Xe container", "icon": "🚚", "pcu": 3.0, "count": 41000, "pct": 1.0 },
+    { "name": "Xe cứu thương", "icon": "🚑", "pcu": 1.5, "count": 12500, "pct": 0.3 },
+    { "name": "Xe cứu hỏa", "icon": "🚒", "pcu": 2.5, "count": 4200, "pct": 0.1 },
+    { "name": "Xe công an", "icon": "🚓", "pcu": 1.5, "count": 8800, "pct": 0.2 },
+    { "name": "Xe quân sự", "icon": "🪖", "pcu": 2.0, "count": 1800, "pct": 0.04 },
+    { "name": "Xe rác", "icon": "🚛", "pcu": 2.0, "count": 6400, "pct": 0.15 },
+    { "name": "Xe taxi", "icon": "🚕", "pcu": 1.0, "count": 78000, "pct": 1.8 },
+    { "name": "Xe công nghệ", "icon": "🚙", "pcu": 1.0, "count": 35000, "pct": 0.8 },
+    { "name": "Xe đặc biệt", "icon": "🚜", "pcu": 1.8, "count": 7150, "pct": 0.17 }
+  ],
+  "od_matrix": {
+    "intersection": "Ngã tư Kim Mã - Nguyễn Chí Thanh",
+    "directions": ["Bắc", "Nam", "Đông", "Tây"],
+    "flows": [
+      { "from": "Bắc", "to": "Nam", "volume": 482, "pct": 38 },
+      { "from": "Bắc", "to": "Đông", "volume": 156, "pct": 12 },
+      { "from": "Bắc", "to": "Tây", "volume": 89, "pct": 7 },
+      { "from": "Nam", "to": "Bắc", "volume": 425, "pct": 33 },
+      { "from": "Nam", "to": "Đông", "volume": 92, "pct": 7 },
+      { "from": "Nam", "to": "Tây", "volume": 138, "pct": 11 },
+      { "from": "Đông", "to": "Tây", "volume": 380, "pct": 30 },
+      { "from": "Đông", "to": "Bắc", "volume": 124, "pct": 10 },
+      { "from": "Đông", "to": "Nam", "volume": 95, "pct": 7 },
+      { "from": "Tây", "to": "Đông", "volume": 358, "pct": 28 },
+      { "from": "Tây", "to": "Bắc", "volume": 110, "pct": 9 },
+      { "from": "Tây", "to": "Nam", "volume": 142, "pct": 11 }
+    ],
+    "turn_ratios": { "straight": 64, "left": 18, "right": 25, "uturn": 2 }
+  },
+  "trajectories": [
+    { "id": "TRAJ_001", "type": "normal", "vehicle": "Ô tô con", "from": "Bắc", "to": "Nam", "speed": 38, "duration": "12s" },
+    { "id": "TRAJ_002", "type": "normal", "vehicle": "Xe buýt", "from": "Đông", "to": "Tây", "speed": 32, "duration": "18s" },
+    { "id": "TRAJ_003", "type": "anomaly_stop", "vehicle": "Xe tải nặng", "from": "Bắc", "to": "?", "speed": 0, "duration": "45s", "alert": "Xe dừng giữa giao lộ" },
+    { "id": "TRAJ_004", "type": "normal", "vehicle": "Xe máy", "from": "Tây", "to": "Đông", "speed": 35, "duration": "10s" },
+    { "id": "TRAJ_005", "type": "anomaly_collision", "vehicle": "Ô tô + Xe máy", "from": "Nam", "to": "?", "speed": 0, "duration": "—", "alert": "Va chạm phát hiện" },
+    { "id": "TRAJ_006", "type": "normal", "vehicle": "Taxi", "from": "Đông", "to": "Bắc", "speed": 42, "duration": "14s" }
+  ],
+  "signal_plans": [
+    {
+      "id": "PLAN_PEAK_MORNING",
+      "name": "Giờ cao điểm sáng",
+      "time_range": "06:30 - 08:30",
+      "priority": "Bắc-Nam",
+      "cycle_time": 140,
+      "algorithm": "Webster",
+      "phases": [
+        { "name": "Pha 1 - Bắc Nam", "green": 55, "yellow": 3, "red": 82 },
+        { "name": "Pha 2 - Đông Tây", "green": 40, "yellow": 3, "red": 97 },
+        { "name": "Pha 3 - Rẽ trái", "green": 20, "yellow": 3, "red": 117 },
+        { "name": "Pha 4 - Bộ hành", "green": 15, "yellow": 3, "red": 122 }
+      ]
+    },
+    {
+      "id": "PLAN_NORMAL",
+      "name": "Giờ bình thường",
+      "time_range": "08:30 - 16:30",
+      "priority": "Cân bằng",
+      "cycle_time": 100,
+      "algorithm": "Adaptive (SCOOT)",
+      "phases": [
+        { "name": "Pha 1 - Bắc Nam", "green": 35, "yellow": 3, "red": 62 },
+        { "name": "Pha 2 - Đông Tây", "green": 30, "yellow": 3, "red": 67 },
+        { "name": "Pha 3 - Rẽ trái", "green": 15, "yellow": 3, "red": 82 },
+        { "name": "Pha 4 - Bộ hành", "green": 10, "yellow": 3, "red": 87 }
+      ]
+    },
+    {
+      "id": "PLAN_PEAK_EVENING",
+      "name": "Giờ cao điểm chiều",
+      "time_range": "16:30 - 19:00",
+      "priority": "Nam-Bắc",
+      "cycle_time": 150,
+      "algorithm": "Webster",
+      "phases": [
+        { "name": "Pha 1 - Nam Bắc", "green": 60, "yellow": 3, "red": 87 },
+        { "name": "Pha 2 - Đông Tây", "green": 45, "yellow": 3, "red": 102 },
+        { "name": "Pha 3 - Rẽ trái", "green": 22, "yellow": 3, "red": 125 },
+        { "name": "Pha 4 - Bộ hành", "green": 12, "yellow": 3, "red": 135 }
+      ]
+    },
+    {
+      "id": "PLAN_NIGHT",
+      "name": "Ban đêm",
+      "time_range": "22:00 - 05:30",
+      "priority": "Flash mode",
+      "cycle_time": 0,
+      "algorithm": "Flash (vàng nhấp nháy)",
+      "phases": [
+        { "name": "Flash vàng", "green": 0, "yellow": 60, "red": 0 }
+      ]
+    }
+  ],
+  "priority_modes": [
+    { "type": "TSP", "name": "Transit Signal Priority", "icon": "🚌", "desc": "Ưu tiên xe buýt khi đến gần nút giao", "active_today": 1248, "saved_seconds_avg": 12, "color": "#10b981" },
+    { "type": "EVP", "name": "Emergency Vehicle Preemption", "icon": "🚑", "desc": "Cứu thương / PCCC: ép pha xanh ngay khi phát hiện", "active_today": 86, "saved_seconds_avg": 28, "color": "#ef4444" },
+    { "type": "FLASH", "name": "Chế độ nhấp nháy vàng", "icon": "⚠️", "desc": "Ban đêm hoặc sự cố — đèn vàng nhấp nháy cảnh báo", "active_today": 124, "saved_seconds_avg": 0, "color": "#f59e0b" },
+    { "type": "ALL_RED", "name": "All-Red (an toàn)", "icon": "🛑", "desc": "Cưỡng bức tất cả pha đỏ — xử lý sự cố / tai nạn", "active_today": 14, "saved_seconds_avg": 0, "color": "#ef4444" },
+    { "type": "MANUAL", "name": "Điều khiển thủ công", "icon": "🎮", "desc": "Operator can thiệp tay — sự kiện đặc biệt, VIP", "active_today": 8, "saved_seconds_avg": 0, "color": "#a855f7" }
+  ],
+  "heatmap_data": [
+    { "zone": "Quận Hoàn Kiếm", "level": "high", "intensity": 88, "intersections": 42, "avg_speed": 18 },
+    { "zone": "Quận Ba Đình", "level": "high", "intensity": 82, "intersections": 38, "avg_speed": 22 },
+    { "zone": "Quận Đống Đa", "level": "critical", "intensity": 95, "intersections": 51, "avg_speed": 14 },
+    { "zone": "Quận Cầu Giấy", "level": "high", "intensity": 79, "intersections": 47, "avg_speed": 24 },
+    { "zone": "Quận Hai Bà Trưng", "level": "medium", "intensity": 65, "intersections": 36, "avg_speed": 30 },
+    { "zone": "Quận Thanh Xuân", "level": "medium", "intensity": 58, "intersections": 32, "avg_speed": 32 },
+    { "zone": "Quận Hoàng Mai", "level": "low", "intensity": 42, "intersections": 28, "avg_speed": 38 },
+    { "zone": "Quận Long Biên", "level": "low", "intensity": 38, "intersections": 24, "avg_speed": 42 },
+    { "zone": "Quận Tây Hồ", "level": "low", "intensity": 35, "intersections": 22, "avg_speed": 44 },
+    { "zone": "Quận Nam Từ Liêm", "level": "medium", "intensity": 56, "intersections": 22, "avg_speed": 33 }
+  ],
+  "incident_predictions": [
+    { "name": "Ngã tư Cầu Giấy - Xuân Thủy", "level": "high", "time": "Trong 15 phút", "expected_volume": "+38%", "reason": "Pattern lịch sử + thời tiết mưa", "confidence": 92 },
+    { "name": "Ngã tư Đống Đa - Tôn Đức Thắng", "level": "high", "time": "Trong 25 phút", "expected_volume": "+42%", "reason": "Sự kiện sân vận động", "confidence": 88 },
+    { "name": "Ngã tư Láng Hạ - Thái Hà", "level": "med", "time": "Trong 40 phút", "expected_volume": "+22%", "reason": "Giờ tan tầm dự đoán", "confidence": 79 },
+    { "name": "Ngã tư Trần Duy Hưng", "level": "med", "time": "Trong 50 phút", "expected_volume": "+18%", "reason": "Mật độ tăng dần từ camera 04", "confidence": 72 },
+    { "name": "Ngã tư Khâm Thiên", "level": "low", "time": "Trong 60 phút", "expected_volume": "+12%", "reason": "LSTM dự báo chu kỳ ngày", "confidence": 68 }
+  ],
+  "ai_suggestions": [
+    { "icon": "🟢", "title": "Tăng pha xanh hành lang Kim Mã", "desc": "Mật độ Đông→Tây tăng 28%, đề xuất tăng green time pha 2 từ 40s lên 50s. Webster + RealtimeQ.", "impact": "-18% chờ", "confidence": 91, "module": "MAXBAND" },
+    { "icon": "🚌", "title": "Kích hoạt TSP cho tuyến BRT 01", "desc": "5 xe buýt BRT đang đến nút Daewoo trong 90s. Đề xuất ưu tiên pha Bắc-Nam.", "impact": "-12s/xe", "confidence": 96, "module": "TSP" },
+    { "icon": "⚡", "title": "Tối ưu offset hành lang Cầu Giấy", "desc": "SCOOT phát hiện offset hiện tại lệch 8s so với optimal. Đề xuất cập nhật real-time.", "impact": "+6% hiệu suất sóng xanh", "confidence": 84, "module": "SCOOT" },
+    { "icon": "⚠️", "title": "Cảnh báo điểm đen tái diễn", "desc": "Nút Đống Đa - Tôn Đức Thắng ùn tắc 3 ngày liên tiếp 17:00-19:00. Đề xuất plan đặc biệt.", "impact": "-25% ùn tắc dự báo", "confidence": 78, "module": "GNN" },
+    { "icon": "🔄", "title": "Chuyển sang plan ban đêm", "desc": "Lưu lượng giảm <15%, đề xuất chuyển sang Flash mode cho 12 nút phụ.", "impact": "Tiết kiệm 35% năng lượng", "confidence": 89, "module": "Adaptive" }
+  ],
+  "events": [
+    { "type": "info", "title": "Tối ưu chu kỳ đèn", "desc": "Webster cập nhật cycle 140s→132s tại Kim Mã", "time": "vừa xong", "tag": "MAXBAND" },
+    { "type": "warn", "title": "Ùn tắc trung bình", "desc": "Cầu Giấy - hàng đợi 24 xe", "time": "1 phút", "tag": "Camera 04" },
+    { "type": "danger", "title": "Sự cố giao thông", "desc": "Đống Đa - Tôn Đức Thắng - va chạm 2 xe", "time": "2 phút", "tag": "Trajectory" },
+    { "type": "info", "title": "TSP kích hoạt", "desc": "Xe buýt BRT 02 - ưu tiên pha Bắc Nam", "time": "3 phút", "tag": "TSP" },
+    { "type": "warn", "title": "Cảm biến offline", "desc": "LOOP_KM_03 - mất kết nối", "time": "5 phút", "tag": "Sensor" },
+    { "type": "info", "title": "Sóng xanh hoạt động", "desc": "Hành lang Kim Mã 12 nút đồng bộ", "time": "8 phút", "tag": "TRANSYT" },
+    { "type": "danger", "title": "EVP kích hoạt", "desc": "Xe cứu thương - ép pha xanh tại Daewoo", "time": "12 phút", "tag": "EVP" },
+    { "type": "info", "title": "Cập nhật mô hình AI", "desc": "LSTM retrain hoàn tất - accuracy 94.2%", "time": "20 phút", "tag": "Model" }
+  ],
+  "hourly_traffic": [
+    { "hour": "00:00", "volume": 12000, "is_peak": false }, { "hour": "01:00", "volume": 8500, "is_peak": false },
+    { "hour": "02:00", "volume": 6200, "is_peak": false }, { "hour": "03:00", "volume": 5400, "is_peak": false },
+    { "hour": "04:00", "volume": 7800, "is_peak": false }, { "hour": "05:00", "volume": 18600, "is_peak": false },
+    { "hour": "06:00", "volume": 145000, "is_peak": true }, { "hour": "07:00", "volume": 285000, "is_peak": true },
+    { "hour": "08:00", "volume": 248000, "is_peak": true }, { "hour": "09:00", "volume": 165000, "is_peak": false },
+    { "hour": "10:00", "volume": 148000, "is_peak": false }, { "hour": "11:00", "volume": 158000, "is_peak": false },
+    { "hour": "12:00", "volume": 178000, "is_peak": false }, { "hour": "13:00", "volume": 162000, "is_peak": false },
+    { "hour": "14:00", "volume": 152000, "is_peak": false }, { "hour": "15:00", "volume": 168000, "is_peak": false },
+    { "hour": "16:00", "volume": 195000, "is_peak": false }, { "hour": "17:00", "volume": 312000, "is_peak": true },
+    { "hour": "18:00", "volume": 285000, "is_peak": true }, { "hour": "19:00", "volume": 198000, "is_peak": false },
+    { "hour": "20:00", "volume": 142000, "is_peak": false }, { "hour": "21:00", "volume": 95000, "is_peak": false },
+    { "hour": "22:00", "volume": 56000, "is_peak": false }, { "hour": "23:00", "volume": 28000, "is_peak": false }
+  ],
+  "top_intersections": [
+    { "name": "Cầu Giấy - Xuân Thủy", "volume": 28500 },
+    { "name": "Đống Đa - Tôn Đức", "volume": 26200 },
+    { "name": "Kim Mã - Nguyễn Chí", "volume": 24800 },
+    { "name": "Láng Hạ - Thái Hà", "volume": 22400 },
+    { "name": "Trần Duy Hưng", "volume": 21100 },
+    { "name": "Khâm Thiên - Nguyễn Lương", "volume": 19800 }
+  ],
+  "forecast_24h": [
+    14000, 9500, 6800, 5200, 7500, 21000, 165000, 295000, 258000, 172000, 152000, 162000,
+    182000, 168000, 158000, 175000, 205000, 325000, 295000, 205000, 148000, 98000, 58000, 30000
+  ],
+  "ai_models": {
+    "lstm": { "name": "LSTM + Attention (15-60 phút)", "accuracy": 94.2, "horizon": "15-60 phút" },
+    "gnn": { "name": "Spatio-Temporal GNN (1-4 giờ)", "accuracy": 89.5, "horizon": "1-4 giờ" },
+    "pattern": { "name": "Pattern Matching (ngày/tuần)", "accuracy": 86.1, "horizon": "1-7 ngày" }
+  }
+}
