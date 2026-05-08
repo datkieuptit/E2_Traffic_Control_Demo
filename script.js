@@ -34,6 +34,7 @@ function renderAll() {
     renderVehicleClasses();
     renderODSankey();
     renderTrajectories();
+    renderIntersectionControlGrid();
     renderSignalPlans();
     renderSignalStatus();
     renderPriorityModes();
@@ -70,9 +71,9 @@ function switchTab(tabId) {
     const titles = {
         dashboard: 'Tổng Quan Giao Thông',
         realtime: 'Phân Tích Thời Gian Thực',
-        signal: 'Điều Khiển Tín Hiệu',
+        signal: 'Trung Tâm Điều Khiển',
         greenwave: 'Làn Sóng Xanh',
-        forecast: 'Dự Báo & Mô Hình',
+        forecast: 'Hỗ Trợ Quyết Định AI',
         visualization: 'Trực Quan Hoá',
         health: 'Giám Sát Hệ Thống'
     };
@@ -435,7 +436,202 @@ function renderTrajectories() {
     }).join('');
 }
 
-// ================== SIGNAL CONTROL ==================
+// ================== CONTROL CENTER ==================
+function renderIntersectionControlGrid() {
+    const grid = document.getElementById('intersectionControlGrid');
+    if (!grid || !DATA.intersection_groups) return;
+    
+    // Lấy 12 nút giao chính
+    const mainIntersections = [
+        { id: 'INT_KIMMA', name: 'Kim Mã - NCT', status: 'online', phase: 'Pha 1 - Bắc Nam (32s)', plan: 'Cao điểm sáng' },
+        { id: 'INT_CAUGIAY', name: 'Cầu Giấy - Xuân Thủy', status: 'warning', phase: 'Pha 2 - Đông Tây (18s)', plan: 'Cao điểm sáng' },
+        { id: 'INT_LANGHA', name: 'Láng Hạ - Thái Hà', status: 'online', phase: 'Pha 1 - Bắc Nam (45s)', plan: 'Cao điểm sáng' },
+        { id: 'INT_TONDUC', name: 'Tôn Đức Thắng', status: 'online', phase: 'Pha 3 - Rẽ trái (12s)', plan: 'Cao điểm sáng' },
+        { id: 'INT_DAOTUAN', name: 'Đào Tấn - Liễu Giai', status: 'online', phase: 'Pha 2 - Đông Tây (28s)', plan: 'Bình thường' },
+        { id: 'INT_TRANDUY', name: 'Trần Duy Hưng', status: 'online', phase: 'Pha 1 - Bắc Nam (38s)', plan: 'Bình thường' },
+        { id: 'INT_DOIDONG', name: 'Đội Cấn - Kim Mã', status: 'online', phase: 'Pha 4 - Bộ hành (8s)', plan: 'Bình thường' },
+        { id: 'INT_DAEWOO', name: 'Daewoo Hotel', status: 'online', phase: 'Pha 1 - Bắc Nam (42s)', plan: 'Bình thường' },
+        { id: 'INT_GIANG', name: 'Giảng Võ - Cát Linh', status: 'online', phase: 'Pha 2 - Đông Tây (25s)', plan: 'Bình thường' },
+        { id: 'INT_LEDUAN', name: 'Lê Duẩn - Khâm Thiên', status: 'online', phase: 'Pha 1 - Bắc Nam (35s)', plan: 'Bình thường' },
+        { id: 'INT_HBTRUNG', name: 'Hai Bà Trưng', status: 'online', phase: 'Pha 2 - Đông Tây (22s)', plan: 'Bình thường' },
+        { id: 'INT_XUANTHUY', name: 'Xuân Thủy - Phạm Hùng', status: 'offline', phase: 'Bảo trì', plan: 'N/A' }
+    ];
+    
+    grid.innerHTML = mainIntersections.map(int => `
+        <div class="intersection-control-card" data-id="${int.id}">
+            <div class="int-header">
+                <span class="int-name">${int.name}</span>
+                <span class="int-status ${int.status}"></span>
+            </div>
+            <div class="int-phase">${int.phase}</div>
+            <div class="int-controls">
+                <button class="quick-btn extend" onclick="extendPhase('${int.id}', 10)" ${int.status === 'offline' ? 'disabled' : ''}>+10s</button>
+                <button class="quick-btn next" onclick="forceNextPhase('${int.id}')" ${int.status === 'offline' ? 'disabled' : ''}>Next</button>
+                <button class="quick-btn evp" onclick="activateEVP('${int.id}')" ${int.status === 'offline' ? 'disabled' : ''}>EVP</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Control Functions
+window.extendPhase = function(intersectionId, seconds) {
+    logControlAction(`Kéo dài pha +${seconds}s tại ${intersectionId}`, 'success');
+    showNotification(`✅ Đã kéo dài pha +${seconds}s tại ${intersectionId}`, 'success');
+};
+
+window.forceNextPhase = function(intersectionId) {
+    logControlAction(`Ép chuyển pha tiếp theo tại ${intersectionId}`, 'success');
+    showNotification(`⚡ Đã chuyển pha tiếp theo tại ${intersectionId}`, 'info');
+};
+
+window.activateEVP = function(intersectionId) {
+    logControlAction(`Kích hoạt EVP tại ${intersectionId}`, 'warning');
+    showNotification(`🚑 EVP đã kích hoạt tại ${intersectionId}`, 'warning');
+};
+
+window.bulkChangePlan = function(planId) {
+    logControlAction(`Chuyển tất cả nút giao sang plan ${planId}`, 'info');
+    showNotification(`🔄 Đã chuyển 338 nút giao sang plan mới`, 'info');
+};
+
+window.bulkActivateFlash = function() {
+    logControlAction('Kích hoạt Flash mode cho các nút giao phụ', 'warning');
+    showNotification(`⚠️ Đã kích hoạt Flash mode cho 124 nút giao`, 'warning');
+};
+
+window.emergencyAllRed = function() {
+    logControlAction('KHẨN CẤP: All-Red toàn hệ thống', 'danger');
+    showNotification(`🛑 KHẨN CẤP: All-Red đã kích hoạt toàn hệ thống`, 'danger');
+};
+
+// System-wide emergency functions
+window.activateSystemEVP = function() {
+    logControlAction('Kích hoạt EVP toàn hệ thống', 'warning');
+    showNotification(`🚑 EVP đã kích hoạt toàn hệ thống`, 'warning');
+};
+
+window.activateSystemTSP = function() {
+    logControlAction('Kích hoạt TSP hành lang chính', 'warning');
+    showNotification(`🚌 TSP đã kích hoạt cho các hành lang chính`, 'warning');
+};
+
+window.systemAllRed = function() {
+    logControlAction('KHẨN CẤP: All-Red toàn hệ thống', 'danger');
+    showNotification(`🛑 KHẨN CẤP: All-Red đã kích hoạt toàn hệ thống`, 'danger');
+};
+
+window.systemFlashMode = function() {
+    logControlAction('Kích hoạt Flash mode toàn hệ thống', 'warning');
+    showNotification(`⚠️ Flash mode đã kích hoạt toàn hệ thống`, 'warning');
+};
+
+// Enhanced suggestion apply function
+window.applySuggestionToControl = function(suggestionId, suggestionTitle) {
+    // Switch to control center tab
+    switchTab('signal');
+    
+    // Log the action
+    logControlAction(`Áp dụng đề xuất AI: ${suggestionTitle}`, 'success');
+    
+    // Show notification
+    showNotification(`🤖 Đã áp dụng đề xuất AI: ${suggestionTitle}`, 'success');
+    
+    // Highlight relevant intersection (simulate)
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.intersection-control-card');
+        if (cards.length > 0) {
+            cards[0].style.border = '2px solid var(--signal-green)';
+            cards[0].style.background = 'rgba(16,185,129,.1)';
+            setTimeout(() => {
+                cards[0].style.border = '1px solid var(--border)';
+                cards[0].style.background = 'rgba(255,255,255,.04)';
+            }, 3000);
+        }
+    }, 500);
+};
+
+function logControlAction(action, type) {
+    const log = document.getElementById('controlActionLog');
+    if (!log) return;
+    
+    const timestamp = new Date().toLocaleTimeString();
+    const icons = {
+        'success': '✅',
+        'info': '🔄', 
+        'warning': '⚠️',
+        'danger': '🚨'
+    };
+    
+    const newLog = document.createElement('div');
+    newLog.className = `log-item ${type}`;
+    newLog.innerHTML = `
+        <span class="log-time">${timestamp}</span>
+        <span class="log-icon">${icons[type]}</span>
+        <span class="log-desc">${action}</span>
+        <span class="log-user">operator01</span>
+    `;
+    
+    log.insertBefore(newLog, log.firstChild);
+    
+    // Keep only last 10 logs
+    while (log.children.length > 10) {
+        log.removeChild(log.lastChild);
+    }
+}
+
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : type === 'danger' ? '#ef4444' : '#3b82f6'};
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+function switchTab(tabId) {
+    // Hide all tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Remove active from nav items
+    document.querySelectorAll('.nav-item').forEach(nav => {
+        nav.classList.remove('active');
+    });
+    
+    // Show target tab
+    const targetTab = document.getElementById(tabId + 'Tab');
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
+    
+    // Activate nav item
+    const targetNav = document.querySelector(`[data-tab="${tabId}"]`);
+    if (targetNav) {
+        targetNav.classList.add('active');
+    }
+}
 function renderSignalPlans() {
     const grid = document.getElementById('signalPlansGrid');
     if (!grid || !DATA.signal_plans) return;
@@ -701,7 +897,7 @@ function renderSuggestions() {
                     <span style="color:var(--txt2);">Module: ${s.module}</span>
                 </div>
             </div>
-            <button class="suggest-action">✓ Áp dụng</button>
+            <button class="suggest-action" onclick="applySuggestionToControl('${s.id}', '${s.title}')">✓ Áp Dụng Ngay</button>
         </div>
     `).join('');
 }

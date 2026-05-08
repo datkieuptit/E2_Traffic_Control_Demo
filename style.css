@@ -209,9 +209,83 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
 .vclass-count{font-size:13px;font-weight:700;color:var(--signal-green);}
 .vclass-percent{font-size:9px;color:var(--txt2);}
 
-/* =================== SIGNAL CONTROL TAB =================== */
+/* =================== CONTROL CENTER TAB =================== */
 .signal-dashboard{display:flex;flex-direction:column;gap:20px;}
 .signal-dashboard > h3{font-size:14px;font-weight:600;color:var(--accent);}
+
+/* Control Overview */
+.control-overview{display:grid;grid-template-columns:1fr auto;gap:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.control-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.stat-icon{font-size:24px;}
+.stat-value{font-size:20px;font-weight:700;color:var(--accent);}
+.stat-label{font-size:11px;color:var(--txt2);}
+
+.bulk-controls{display:flex;flex-direction:column;gap:8px;}
+.bulk-btn{padding:10px 16px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.bulk-btn.primary{background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#fff;}
+.bulk-btn.warning{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
+.bulk-btn.danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;}
+.bulk-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* Multi-Intersection Grid */
+.multi-intersection-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.multi-intersection-section h3{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;}
+.intersection-control-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+
+.intersection-control-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:14px;transition:all .2s;}
+.intersection-control-card:hover{border-color:var(--accent);background:rgba(0,210,255,.05);}
+.int-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.int-name{font-size:11px;font-weight:600;color:var(--txt);}
+.int-status{width:8px;height:8px;border-radius:50%;}
+.int-status.online{background:var(--signal-green);}
+.int-status.warning{background:var(--warn);}
+.int-status.offline{background:var(--danger);}
+
+.int-phase{font-size:10px;color:var(--txt2);margin-bottom:10px;}
+.int-controls{display:flex;gap:4px;}
+.quick-btn{padding:4px 8px;border:none;border-radius:4px;font-size:9px;font-weight:600;cursor:pointer;transition:all .2s;}
+.quick-btn.extend{background:rgba(16,185,129,.2);color:var(--signal-green);border:1px solid rgba(16,185,129,.3);}
+.quick-btn.next{background:rgba(59,130,246,.2);color:var(--accent);border:1px solid rgba(59,130,246,.3);}
+.quick-btn.evp{background:rgba(239,68,68,.2);color:var(--danger);border:1px solid rgba(239,68,68,.3);}
+.quick-btn:hover{filter:brightness(1.2);transform:scale(1.05);}
+
+/* Emergency Control Panel */
+.emergency-control-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.emergency-control-panel h3{font-size:13px;font-weight:600;color:var(--danger);margin-bottom:14px;}
+.emergency-controls{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.emergency-group h4{font-size:11px;font-weight:600;color:var(--txt2);margin-bottom:8px;}
+.emg-btn{padding:10px 14px;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;transition:all .2s;}
+.emg-btn.evp{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;}
+.emg-btn.tsp{background:linear-gradient(135deg,#10b981,#059669);color:#fff;}
+.emg-btn.danger{background:linear-gradient(135deg,#7f1d1d,#991b1b);color:#fff;}
+.emg-btn.warning{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
+.emg-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+
+/* Control Log */
+.control-log-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.control-log-section h3{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;}
+.control-log{max-height:200px;overflow-y:auto;}
+.log-item{display:grid;grid-template-columns:60px 20px 1fr 80px;gap:8px;align-items:center;padding:8px;border-radius:6px;margin-bottom:4px;font-size:10px;}
+.log-item.success{background:rgba(16,185,129,.1);border-left:3px solid var(--signal-green);}
+.log-item.info{background:rgba(59,130,246,.1);border-left:3px solid var(--accent);}
+.log-item.warning{background:rgba(245,158,11,.1);border-left:3px solid var(--warn);}
+.log-time{color:var(--txt2);font-weight:600;}
+.log-icon{font-size:12px;}
+.log-desc{color:var(--txt);}
+.log-user{color:var(--txt2);font-size:9px;text-align:right;}
+
+/* AI Decision Support */
+.ai-overview{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:20px;}
+.ai-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.ai-stat-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.ai-stat-icon{font-size:24px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,210,255,.12);border-radius:8px;}
+.ai-stat-number{font-size:18px;font-weight:700;color:var(--accent);}
+.ai-stat-label{font-size:10px;color:var(--txt2);}
+
+.ai-suggestions-note{background:rgba(0,210,255,.1);border:1px solid rgba(0,210,255,.3);border-radius:8px;padding:12px;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.note-icon{font-size:20px;}
+.note-text{font-size:11px;color:var(--txt);line-height:1.4;}
 
 .signal-phase-section{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:20px;}
 .signal-phase-section h3{font-size:13px;font-weight:600;margin-bottom:16px;color:var(--accent);}
@@ -631,4 +705,58 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);height
     .dashboard-cards,.gw-overview-cards,.vis-cards,.health-grid,.phase-display,.corridor-stats{grid-template-columns:1fr 1fr;}
     .vehicle-class-grid{grid-template-columns:repeat(2,1fr);}
     .cam-grid{grid-template-columns:1fr;}
+}
+
+/* =================== NOTIFICATION ANIMATIONS =================== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* =================== NOTIFICATION STYLES =================== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+.notification.success {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.notification.danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.notification.info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
 }

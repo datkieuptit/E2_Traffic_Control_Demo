@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E2 - Traffic Signal Control | CamAI Ecosystem</title>
+    <title>E2 - Trung Tâm Điều Khiển Giao Thông | CamAI Ecosystem</title>
     <meta name="description" content="Phần mềm phân tích điều khiển tự động tủ đèn giao thông - CamAI E2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,9 +21,9 @@
             <nav class="nav-menu">
                 <a href="#" class="nav-item active" data-tab="dashboard">📊 Tổng Quan Giao Thông</a>
                 <a href="#" class="nav-item" data-tab="realtime">🔴 Phân Tích Thời Gian Thực</a>
-                <a href="#" class="nav-item" data-tab="signal">🚦 Điều Khiển Tín Hiệu</a>
+                <a href="#" class="nav-item" data-tab="signal">🎛️ Trung Tâm Điều Khiển</a>
                 <a href="#" class="nav-item" data-tab="greenwave">🟢 Làn Sóng Xanh</a>
-                <a href="#" class="nav-item" data-tab="forecast">📈 Dự Báo & Mô Hình</a>
+                <a href="#" class="nav-item" data-tab="forecast">🤖 Hỗ Trợ Quyết Định AI</a>
                 <a href="#" class="nav-item" data-tab="visualization">📺 Trực Quan Hoá</a>
                 <a href="#" class="nav-item" data-tab="health">💓 Giám Sát Hệ Thống</a>
             </nav>
@@ -86,7 +86,7 @@
                 </div>
 
                 <!-- License & Compliance -->
-                <div class="license-section">
+                <!-- <div class="license-section">
                     <div class="license-card">
                         <div class="license-icon">🔐</div>
                         <div class="license-info">
@@ -100,7 +100,7 @@
                         </div>
                         <div class="compliance-tags" id="complianceTags"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Sensor Sources -->
                 <div class="sensor-section">
@@ -239,38 +239,108 @@
                 </div>
             </section>
 
-            <!-- TAB 3: ĐIỀU KHIỂN TÍN HIỆU -->
+            <!-- TAB 3: TRUNG TÂM ĐIỀU KHIỂN -->
             <section id="signalTab" class="tab">
                 <div class="signal-dashboard">
-                    <h3>🚦 Điều Khiển Tín Hiệu Giao Thông - Quản Lý Pha Đèn</h3>
-                    <!-- Signal Phase Display -->
-                    <div class="signal-phase-section">
-                        <h3>⏱️ Pha Đèn Hiện Tại - <span id="currentPlanName">Giờ cao điểm sáng</span></h3>
-                        <div class="phase-display" id="phaseDisplay"></div>
-                        <div class="cycle-timer">
-                            <div class="cycle-bar"><div class="cycle-progress" id="cycleProgress"></div></div>
-                            <div class="cycle-info">
-                                <span>Chu kỳ: <strong id="cycleTime">140s</strong></span>
-                                <span>Pha hiện tại: <strong id="currentPhase">Pha 1 - Bắc Nam</strong></span>
-                                <span>Còn lại: <strong id="phaseRemaining">32s</strong></span>
+                    <h3>🎛️ Trung Tâm Điều Khiển Giao Thông - Multi-Intersection Control</h3>
+                    
+                    <!-- Control Center Overview -->
+                    <div class="control-overview">
+                        <div class="control-stats">
+                            <div class="stat-item">
+                                <span class="stat-icon">🔀</span>
+                                <span class="stat-value">342</span>
+                                <span class="stat-label">Nút Giao</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🟢</span>
+                                <span class="stat-value">338</span>
+                                <span class="stat-label">Hoạt Động</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">⚠️</span>
+                                <span class="stat-value">4</span>
+                                <span class="stat-label">Bảo Trì</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🚦</span>
+                                <span class="stat-value">684</span>
+                                <span class="stat-label">Tủ Đèn</span>
+                            </div>
+                        </div>
+                        <div class="bulk-controls">
+                            <button class="bulk-btn primary" onclick="bulkChangePlan('PLAN_PEAK_EVENING')">
+                                🌆 Tất cả → Plan Chiều
+                            </button>
+                            <button class="bulk-btn warning" onclick="bulkActivateFlash()">
+                                ⚠️ Kích hoạt Flash Mode
+                            </button>
+                            <button class="bulk-btn danger" onclick="emergencyAllRed()">
+                                🛑 Khẩn Cấp All-Red
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Intersection Control Grid -->
+                    <div class="multi-intersection-section">
+                        <h3>� Điều Khiển Đồng Thời 12 Nút Giao Chính</h3>
+                        <div class="intersection-control-grid" id="intersectionControlGrid"></div>
+                    </div>
+
+                    <!-- Emergency Control Panel -->
+                    <div class="emergency-control-panel">
+                        <h3>🚨 Bảng Điều Khiển Khẩn Cấp</h3>
+                        <div class="emergency-controls">
+                            <div class="emergency-group">
+                                <h4>⚡ Ưu Tiên Khẩn Cấp</h4>
+                                <button class="emg-btn evp" onclick="activateSystemEVP()">
+                                    🚑 Kích hoạt EVP Toàn Hệ Thống
+                                </button>
+                                <button class="emg-btn tsp" onclick="activateSystemTSP()">
+                                    🚌 Kích hoạt TSP Hành Lang Chính
+                                </button>
+                            </div>
+                            <div class="emergency-group">
+                                <h4>🛑 An Toàn Hệ Thống</h4>
+                                <button class="emg-btn danger" onclick="systemAllRed()">
+                                    🛑 All-Red Toàn Hệ Thống
+                                </button>
+                                <button class="emg-btn warning" onclick="systemFlashMode()">
+                                    ⚠️ Flash Mode Toàn Hệ Thống
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <!-- Signal Plans -->
-                    <div class="signal-plans-section">
-                        <h3>📋 Kế Hoạch Tín Hiệu Trong Ngày</h3>
-                        <div class="plans-grid" id="signalPlansGrid"></div>
-                    </div>
-                    <!-- Priority Modes: TSP / EVP / Flash / All-Red / Manual -->
-                    <div class="priority-modes-section">
-                        <h3>⚡ Chế Độ Ưu Tiên & Đặc Biệt</h3>
-                        <div class="priority-grid" id="priorityModesGrid"></div>
-                    </div>
 
-                    <!-- Intersection Signal Status -->
-                    <div class="intersection-signals">
-                        <h3>🔀 Trạng Thái Đèn Tại Các Nút Giao</h3>
-                        <div class="signal-status-grid" id="signalStatusGrid"></div>
+                    <!-- Control Action Log -->
+                    <div class="control-log-section">
+                        <h3>📋 Nhật Ký Điều Khiển Real-time</h3>
+                        <div class="control-log" id="controlActionLog">
+                            <div class="log-item success">
+                                <span class="log-time">14:32:18</span>
+                                <span class="log-icon">✅</span>
+                                <span class="log-desc">Áp dụng đề xuất AI: Tăng pha xanh Kim Mã +10s</span>
+                                <span class="log-user">operator01</span>
+                            </div>
+                            <div class="log-item info">
+                                <span class="log-time">14:30:42</span>
+                                <span class="log-icon">🔄</span>
+                                <span class="log-desc">Chuyển 12 nút giao sang plan "Cao điểm chiều"</span>
+                                <span class="log-user">system</span>
+                            </div>
+                            <div class="log-item warning">
+                                <span class="log-time">14:28:15</span>
+                                <span class="log-icon">🚑</span>
+                                <span class="log-desc">EVP kích hoạt tại Cầu Giấy - Xe cứu thương</span>
+                                <span class="log-user">auto</span>
+                            </div>
+                            <div class="log-item info">
+                                <span class="log-time">14:25:33</span>
+                                <span class="log-icon">🚌</span>
+                                <span class="log-desc">TSP kích hoạt hành lang Kim Mã - 3 xe buýt</span>
+                                <span class="log-user">auto</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -296,10 +366,45 @@
                 </div>
             </section>
 
-            <!-- TAB 5: DỰ BÁO & MÔ HÌNH -->
+            <!-- TAB 5: HỖ TRỢ QUYẾT ĐỊNH AI -->
             <section id="forecastTab" class="tab">
                 <div class="forecast-dashboard">
-                    <h3>📈 Dự Báo & Mô Hình Hoá Giao Thông</h3>
+                    <h3>🤖 Hỗ Trợ Quyết Định AI - AI Decision Support System</h3>
+                    
+                    <!-- AI Overview -->
+                    <!-- <div class="ai-overview">
+                        <div class="ai-stats">
+                            <div class="ai-stat-card">
+                                <div class="ai-stat-icon">🧠</div>
+                                <div class="ai-stat-content">
+                                    <div class="ai-stat-number">94.2%</div>
+                                    <div class="ai-stat-label">Độ Chính Xác AI</div>
+                                </div>
+                            </div>
+                            <div class="ai-stat-card">
+                                <div class="ai-stat-icon">⚡</div>
+                                <div class="ai-stat-content">
+                                    <div class="ai-stat-number">5</div>
+                                    <div class="ai-stat-label">Đề Xuất Mới</div>
+                                </div>
+                            </div>
+                            <div class="ai-stat-card">
+                                <div class="ai-stat-icon">✅</div>
+                                <div class="ai-stat-content">
+                                    <div class="ai-stat-number">12</div>
+                                    <div class="ai-stat-label">Đã Áp Dụng Hôm Nay</div>
+                                </div>
+                            </div>
+                            <div class="ai-stat-card">
+                                <div class="ai-stat-icon">📈</div>
+                                <div class="ai-stat-content">
+                                    <div class="ai-stat-number">-18%</div>
+                                    <div class="ai-stat-label">Giảm Thời Gian Chờ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
                     <div class="overview-grid">
                         <div class="overview-section">
                             <h3>🔮 Dự Báo Lưu Lượng 24h</h3>
@@ -322,9 +427,13 @@
                         <h3>⚠️ Dự Báo Ùn Tắc Sắp Tới</h3>
                         <div class="prediction-cards" id="predictionCards"></div>
                     </div>
-                    <!-- Optimization Suggestions -->
+                    <!-- AI Optimization Suggestions -->
                     <div class="optimization-section">
-                        <h3>💡 Đề Xuất Tối Ưu Từ AI</h3>
+                        <h3>💡 Đề Xuất Tối Ưu Từ AI - Sẵn Sàng Áp Dụng</h3>
+                        <div class="ai-suggestions-note">
+                            <span class="note-icon">🤖</span>
+                            <span class="note-text">AI đã phân tích dữ liệu real-time và đưa ra các đề xuất tối ưu. Click "✓ Áp Dụng Ngay" để chuyển sang Trung Tâm Điều Khiển và thực thi.</span>
+                        </div>
                         <div class="suggestion-list" id="suggestionList"></div>
                     </div>
                 </div>
